@@ -1,0 +1,18 @@
+.wrapper {
+   position: fixed;
+   display: flex;
+   align-items: center;
+	.logo a {
+      margin: 20px;
+		display: flex;
+      text-decoration: none;
+      align-items: center;
+      color: white;
+      h3 {
+         text-transform: uppercase;
+         margin-left: 15px;
+         font-weight: 700;
+         font-size: 17px;
+      }
+	}
+}
