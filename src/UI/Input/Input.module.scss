@@ -1,14 +1,12 @@
 .wrapper {
 	display: flex;
-	position: absolute;
-	z-index: 2;
-	top: 40%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	justify-content: center;
 }
 
 .inputWrapper {
+	position: relative;
 	display: flex;
+	margin-top: 300px;
 }
 
 .input {
@@ -19,14 +17,16 @@
 	font-size: 16px;
 	max-width: 500px;
 	outline: none;
-   font-weight: 600;
+	font-weight: 600;
+	color: white;
 	box-sizing: border-box;
+	background-color: #1d1f20;
 }
 
 @media (max-width: 768px) {
-   .input {
-      width: 300px;
-      font-weight: 500;
+	.input {
+		width: 300px;
+		font-weight: 500;
 		max-width: 100%;
 		font-size: 14px;
 	}
@@ -36,18 +36,18 @@
 	right: 10px;
 	top: 10px;
 	position: absolute;
-	background-color: #ff385b;
+	background-color: #ca092c;
 	color: #fff;
 	border: none;
 	border-radius: 20px;
 	font-size: 16px;
-   font-weight: 500;
+	font-weight: 500;
 	padding: 10px 20px;
 	cursor: pointer;
-   transition: all 0.3s ease 0s;
-   &:hover {
-      background-color: #ad0121;
-   }
+	transition: all 0.3s ease 0s;
+	&:hover {
+		background-color: #ad0121;
+	}
 }
 
 @media (max-width: 768px) {

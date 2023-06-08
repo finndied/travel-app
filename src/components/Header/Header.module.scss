@@ -2,6 +2,9 @@
    position: fixed;
    display: flex;
    align-items: center;
+   z-index: 1;
+   width: 100%;
+   transition: all 0.9s ease 0s;
 	.logo a {
       margin: 20px;
 		display: flex;
@@ -15,4 +18,8 @@
          font-size: 17px;
       }
 	}
+}
+
+.backWrapper {
+   background-color: #1d1f207c;
 }
