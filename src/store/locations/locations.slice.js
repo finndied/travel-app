@@ -4,13 +4,16 @@ import axios from 'axios'
 const apiKey = '5ae2e3f221c38a28845f05b6db9289dd3349958b5de9ebed5c40c94e'
 const pageLength = 60
 
+// Function to fetch places data from the API
 const fetchPlaces = async (cityName, offset) => {
 	try {
+		// Fetch geolocation data for the city
 		const response = await axios.get(
 			`https://api.opentripmap.com/0.1/en/places/geoname?name=${cityName}&apikey=${apiKey}`
 		)
 		const { lat, lon } = response.data
 
+		// Fetch places within a radius around the city
 		const radiusResponse = await axios.get(
 			`https://api.opentripmap.com/0.1/en/places/radius?lat=${lat}&lon=${lon}&radius=1000&limit=${pageLength}&offset=${offset}&apikey=${apiKey}`
 		)
@@ -18,6 +21,7 @@ const fetchPlaces = async (cityName, offset) => {
 
 		let places = []
 
+		// Loop through the retrieved places and fetch more details for each place
 		for (const place of placesData.features) {
 			await new Promise(resolve => setTimeout(resolve, 100))
 
@@ -51,10 +55,12 @@ const fetchPlaces = async (cityName, offset) => {
 	}
 }
 
+// Async thunk to fetch locations data for the specified city
 export const fetchLocations = createAsyncThunk(
 	'locations/fetchLocations',
 	async ({ cityName }, { rejectWithValue }) => {
 		try {
+			// Fetch the initial batch of places
 			const places = await fetchPlaces(cityName, 0)
 			return { cityName, places, offset: pageLength }
 		} catch (error) {
@@ -63,10 +69,12 @@ export const fetchLocations = createAsyncThunk(
 	}
 )
 
+// Async thunk to fetch more locations data for the specified city
 export const fetchMoreLocations = createAsyncThunk(
 	'locations/fetchMoreLocations',
 	async ({ cityName, offset }, { rejectWithValue }) => {
 		try {
+			// Fetch more places based on the offset
 			const places = await fetchPlaces(cityName, offset)
 			return { cityName, places }
 		} catch (error) {
