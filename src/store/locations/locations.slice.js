@@ -2,71 +2,86 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const apiKey = '5ae2e3f221c38a28845f05b6db9289dd3349958b5de9ebed5c40c94e'
-const pageLength = 50
-const offset = 0
+const pageLength = 60
+
+const fetchPlaces = async (cityName, offset) => {
+	try {
+		const response = await axios.get(
+			`https://api.opentripmap.com/0.1/en/places/geoname?name=${cityName}&apikey=${apiKey}`
+		)
+		const { lat, lon } = response.data
+
+		const radiusResponse = await axios.get(
+			`https://api.opentripmap.com/0.1/en/places/radius?lat=${lat}&lon=${lon}&radius=1000&limit=${pageLength}&offset=${offset}&apikey=${apiKey}`
+		)
+		const placesData = radiusResponse.data
+
+		let places = []
+
+		for (const place of placesData.features) {
+			await new Promise(resolve => setTimeout(resolve, 100))
+
+			const xid = place.properties.xid
+			const placeResponse = await axios.get(
+				`https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=${apiKey}`
+			)
+			const placeData = placeResponse.data
+			console.log('placeData:', placeData)
+
+			if (placeData.name !== undefined && placeData.name.trim() !== '') {
+				const placeObj = {
+					xid: placeData.xid,
+					name: placeData.name,
+					info: placeData.info,
+					rate: placeData.rate,
+					preview: placeData.preview && placeData.preview.source,
+					address: placeData.address
+				}
+
+				places.push(placeObj)
+
+				if (places.length >= 10) {
+					break
+				}
+			}
+		}
+		return places
+	} catch (error) {
+		throw error.response.data
+	}
+}
 
 export const fetchLocations = createAsyncThunk(
 	'locations/fetchLocations',
-	async ({ cityName }, { getState, rejectWithValue }) => {
+	async ({ cityName }, { rejectWithValue }) => {
 		try {
-			const response = await axios.get(
-				`https://api.opentripmap.com/0.1/en/places/geoname?name=${cityName}&apikey=${apiKey}`
-			)
-			const { lat, lon } = response.data
+			const places = await fetchPlaces(cityName, 0)
+			return { cityName, places, offset: pageLength }
+		} catch (error) {
+			return rejectWithValue(error)
+		}
+	}
+)
 
-			const radiusResponse = await axios.get(
-				`https://api.opentripmap.com/0.1/en/places/radius?lat=${lat}&lon=${lon}&radius=1000&limit=${pageLength}&offset=${offset}&apikey=${apiKey}`
-			)
-			const placesData = radiusResponse.data
-
-			let places = []
-
-			for (const place of placesData.features) {
-				await new Promise(resolve => setTimeout(resolve, 100)) // Задержка перед каждым запросом
-
-				const xid = place.properties.xid
-				const placeResponse = await axios.get(
-					`https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=${apiKey}`
-				)
-				const placeData = placeResponse.data
-				console.log('placeData:', placeData)
-
-				if (placeData.preview && placeData.preview.source) {
-					const placeObj = {
-						xid: placeData.xid,
-						name: placeData.name,
-						rate: placeData.rate,
-						preview: placeData.preview.source,
-						address: placeData.address
-					}
-
-					places.push(placeObj)
-
-					// Проверка на достижение желаемого количества результатов
-					if (places.length >= 10) {
-						break
-					}
-				}
-			}
-
+export const fetchMoreLocations = createAsyncThunk(
+	'locations/fetchMoreLocations',
+	async ({ cityName, offset }, { rejectWithValue }) => {
+		try {
+			const places = await fetchPlaces(cityName, offset)
 			return { cityName, places }
 		} catch (error) {
-			return rejectWithValue(error.response.data)
+			return rejectWithValue(error)
 		}
 	}
 )
 
 const initialState = {
-	data: [],
 	places: [],
 	cityName: '',
-	rate: '',
-	name: '',
 	preview: {},
-	address: '',
 	isLoading: false,
 	error: null,
-	page: 1
+	offset: 0
 }
 
 const locationsSlice = createSlice({
@@ -78,30 +93,37 @@ const locationsSlice = createSlice({
 			.addCase(fetchLocations.pending, state => {
 				state.isLoading = true
 				state.error = null
-				state.data = []
-				state.preview = {}
 				state.places = []
-				state.cityName = ''
-				state.rate = ''
-				state.address = ''
+				state.preview = {}
+				state.offset = 0
 			})
 			.addCase(fetchLocations.fulfilled, (state, action) => {
 				state.isLoading = false
 				state.error = null
-				state.data = action.payload.data
+				state.preview = action.payload.preview
 				state.cityName = action.payload.cityName
 				state.places = action.payload.places
-				state.preview = action.payload.preview
-				state.address = action.payload.address
-				state.name = action.payload.name
-				state.rate = action.payload.rate
+				state.offset = action.payload.offset
 			})
 			.addCase(fetchLocations.rejected, (state, action) => {
 				state.isLoading = false
 				state.error = action.payload
-				state.data = []
 				state.places = []
-				state.cityName = action.meta.arg.cityName
+				state.offset = 0
+			})
+			.addCase(fetchMoreLocations.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(fetchMoreLocations.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.error = null
+				state.places = state.places.concat(action.payload.places)
+				state.offset = state.offset + pageLength
+			})
+			.addCase(fetchMoreLocations.rejected, (state, action) => {
+				state.isLoading = false
+				state.error = action.payload
 			})
 	}
 })

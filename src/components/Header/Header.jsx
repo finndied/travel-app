@@ -8,7 +8,7 @@ export const Header = () => {
 
 	useEffect(() => {
 		function handleScroll() {
-			if (window.pageYOffset > 10) {
+			if (window.scrollY > 10) {
 				setShowElement(true)
 			} else {
 				setShowElement(false)
