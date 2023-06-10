@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const apiKey = '5ae2e3f221c38a28845f05b6db9289dd3349958b5de9ebed5c40c94e'
-const pageLength = 60
+const pageLength = 150
 
 // Function to fetch places data from the API
 const fetchPlaces = async (cityName, offset) => {

@@ -3,7 +3,7 @@ import { Navbar } from './Navbar/Navbar'
 import styles from './Header.module.scss'
 import { Link } from 'react-router-dom'
 
-export const Header = () => {
+export const Header = ({ className }) => {
 	const [showElement, setShowElement] = useState(false)
 
 	useEffect(() => {
@@ -23,10 +23,10 @@ export const Header = () => {
 	}, [])
 	return (
 		<>
-				<div className={`${styles.wrapper} ${showElement ? styles.backWrapper : ''}`}>
+				<div className={`${styles.wrapper} ${className} ${showElement ? styles.backWrapper : ''}`}>
 					<div className={styles.logo}>
 						<Link to='/'>
-							<img src='src/assets/images/logo.svg' width='35px' alt='logo' />
+							{/* <img src='src/assets/images/logo.svg' width='35px' alt='logo' /> */}
 							<h3>Travel app</h3>
 						</Link>
 					</div>
