@@ -53,7 +53,7 @@ const SearchPage = () => {
 										className={styles.placeImage}
 									/>
 								)}
-								<h2>Name: {place.name}</h2>
+								<h2>{place.name}</h2>
 								<p>Address: {place.address.road || 'No address'}</p>
 								<button
 									className={styles.favButton}
@@ -61,7 +61,12 @@ const SearchPage = () => {
 								>
 									{favorites[index] ? <MdFavorite /> : <MdFavoriteBorder />}
 								</button>
-								<Link to='/' className={styles.buttonChat} type='submit'>
+								<Link
+									to={`/chat/${place.xid}`}
+									state={{ attraction: place }}
+									className={styles.buttonChat}
+									type='submit'
+								>
 									Go to chat
 									<ImArrowRight2 />
 								</Link>
@@ -95,7 +100,6 @@ const SearchPage = () => {
 					)}
 				</>
 			)}
-			{console.log('эщкере', places)}
 		</div>
 	)
 }
