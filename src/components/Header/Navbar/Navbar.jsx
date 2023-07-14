@@ -8,7 +8,7 @@ export const Navbar = () => {
 			<Link to='#'>
 				<p>Tutorial</p>
 			</Link>
-         <Link to='#'>
+         <Link to='/favorites'>
 				<p>Favorites</p>
 			</Link>
 		</div>

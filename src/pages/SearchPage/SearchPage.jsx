@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Header } from '../../components/Header/Header'
 import { fetchMoreLocations } from '../../store/locations/locations.slice'
+import {
+	addToFavorites,
+	removeFromFavorites
+} from '../../store/favorites/favorites.slice'
 import styles from './SearchPage.module.scss'
 import placeholderImage from '../../assets/images/no-image.jpg'
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
@@ -14,8 +18,8 @@ const SearchPage = () => {
 	const { cityName, places, offset, isLoading } = useSelector(
 		({ locations }) => locations
 	)
+	const favorites = useSelector(({ favorites }) => favorites.favorites)
 
-	const [favorites, setFavorites] = useState([])
 	const [isFirstLoad, setIsFirstLoad] = useState(true)
 
 	const handleShowMore = () => {
@@ -23,10 +27,13 @@ const SearchPage = () => {
 		setIsFirstLoad(false)
 	}
 
-	const handleFavorite = index => {
-		const updatedFavorites = [...favorites]
-		updatedFavorites[index] = !updatedFavorites[index]
-		setFavorites(updatedFavorites)
+	const handleFavorite = place => {
+		if (favorites.find(favorite => favorite.xid === place.xid)) {
+			dispatch(removeFromFavorites({ xid: place.xid }))
+		} else {
+			const { xid, name, address, preview } = place
+			dispatch(addToFavorites({ xid, name, address, preview }))
+		}
 	}
 
 	const openGoogleMaps = attraction => {
@@ -46,7 +53,7 @@ const SearchPage = () => {
 			{places.length > 0 ? (
 				<>
 					<div className={styles.placesContainer}>
-						{places.map((place, index) => (
+						{places.map(place => (
 							<div key={place.xid} className={styles.place}>
 								{place.preview ? (
 									<img
@@ -65,14 +72,19 @@ const SearchPage = () => {
 								<p>Address: {place.address.road || 'No address'}</p>
 								<button
 									className={styles.favButton}
-									onClick={() => handleFavorite(index)}
+									onClick={() => handleFavorite(place)}
 								>
-									{favorites[index] ? <MdFavorite /> : <MdFavoriteBorder />}
+									{favorites.find(favorite => favorite.xid === place.xid) ? (
+										<MdFavorite />
+									) : (
+										<MdFavoriteBorder />
+									)}
 								</button>
-								<button className={styles.mapButton}
+								<button
+									className={styles.mapButton}
 									onClick={() => openGoogleMaps(place)}
 								>
-									<ImMap2/>
+									<ImMap2 />
 								</button>
 								<Link
 									to={`/chat/${place.xid}`}
