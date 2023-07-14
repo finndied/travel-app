@@ -41,6 +41,21 @@
 			margin-top: 15px;
 			font-weight: 300;
 		}
+		.mapButton {
+			position: absolute;
+			bottom: 22px;
+			right: 60px;
+			font-size: 30px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			color: #ad0121;
+			transition: all 0.9s ease 0s;
+			padding: 8px;
+			&:hover {
+				color: #de0c33;
+			}
+		}
 		.favButton {
 			position: absolute;
 			bottom: 22px;

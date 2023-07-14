@@ -6,7 +6,7 @@ import { fetchMoreLocations } from '../../store/locations/locations.slice'
 import styles from './SearchPage.module.scss'
 import placeholderImage from '../../assets/images/no-image.jpg'
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
-import { ImArrowRight2 } from 'react-icons/im'
+import { ImArrowRight2, ImMap2 } from 'react-icons/im'
 import MyLoader from './MyLoader'
 
 const SearchPage = () => {
@@ -27,6 +27,14 @@ const SearchPage = () => {
 		const updatedFavorites = [...favorites]
 		updatedFavorites[index] = !updatedFavorites[index]
 		setFavorites(updatedFavorites)
+	}
+
+	const openGoogleMaps = attraction => {
+		const attractionName = attraction.name
+		const url = `https://www.google.com/maps?q=${encodeURIComponent(
+			attractionName
+		)}`
+		window.open(url, '_blank')
 	}
 
 	return (
@@ -60,6 +68,11 @@ const SearchPage = () => {
 									onClick={() => handleFavorite(index)}
 								>
 									{favorites[index] ? <MdFavorite /> : <MdFavoriteBorder />}
+								</button>
+								<button className={styles.mapButton}
+									onClick={() => openGoogleMaps(place)}
+								>
+									<ImMap2/>
 								</button>
 								<Link
 									to={`/chat/${place.xid}`}

@@ -9,7 +9,8 @@ import useChatApi from '../../hooks/useChatApi'
 const ChatPage = () => {
 	const location = useLocation()
 	const attraction = location.state?.attraction
-	const { inputMessage, setInputMessage, chatHistory, sendChatRequest } = useChatApi(attraction);
+	const { inputMessage, setInputMessage, chatHistory, sendChatRequest } =
+		useChatApi(attraction)
 	const navigate = useNavigate()
 
 	const handleInputChange = e => {
@@ -48,30 +49,30 @@ const ChatPage = () => {
 					)}
 					<h1>Ask the bot something about this place</h1>
 				</div>
-			</div>
-			<div className={styles.chat}>
-				{chatHistory.map((message, index) => (
-					<div className={styles.chatAnswer} key={index}>
-						{message}
+				<div className={styles.chat}>
+					{chatHistory.map((message, index) => (
+						<div className={styles.chatAnswer} key={index}>
+							{message}
+						</div>
+					))}
+					<div className={styles.chatInputWrapper}>
+						<input
+							className={styles.chatInput}
+							placeholder='Ask the bot'
+							type='text'
+							value={inputMessage}
+							onChange={handleInputChange}
+						/>
+						<button className={styles.chatButton} onClick={handleSendMessage}>
+							➤
+						</button>
 					</div>
-				))}
-				<div className={styles.chatInputWrapper}>
-					<input
-						className={styles.chatInput}
-						placeholder='Ask the bot'
-						type='text'
-						value={inputMessage}
-						onChange={handleInputChange}
-					/>
-					<button className={styles.chatButton} onClick={handleSendMessage}>
-						Send
-					</button>
+					<div className={styles.chatHeader}>
+						<button className={styles.backButton} onClick={() => navigate(-1)}>
+							Go Back
+						</button>
+					</div>
 				</div>
-			</div>
-			<div className={styles.chatHeader}>
-				<button className={styles.backButton} onClick={() => navigate(-1)}>
-					Go Back
-				</button>
 			</div>
 		</div>
 	)
