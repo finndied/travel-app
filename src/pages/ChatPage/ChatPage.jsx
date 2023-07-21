@@ -11,8 +11,10 @@ const ChatPage = () => {
 	const attraction = location.state?.attraction
 	const { inputMessage, setInputMessage, chatHistory, sendChatRequest } =
 		useChatApi(attraction)
-	const navigate = useNavigate()
 
+	const handleGoBack = () => {
+		window.history.back()
+	}
 	const handleInputChange = e => {
 		setInputMessage(e.target.value)
 	}
@@ -68,7 +70,7 @@ const ChatPage = () => {
 						</button>
 					</div>
 					<div className={styles.chatHeader}>
-						<button className={styles.backButton} onClick={() => navigate(-1)}>
+						<button className={styles.backButton} onClick={handleGoBack}>
 							Go Back
 						</button>
 					</div>

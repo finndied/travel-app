@@ -27,8 +27,8 @@ const useChatApi = attraction => {
 			data: {
 				model: 'gpt-3.5-turbo',
 				messages: [
-					...chatHistory.map(message => ({ role: 'system', content: message })), // Добавляем предыдущие сообщения в историю
-					{ role: 'user', content: fullMessage } // Добавляем новое сообщение пользователя
+					...chatHistory.map(message => ({ role: 'system', content: message })),
+					{ role: 'user', content: fullMessage }
 				],
 				temperature: 0.8
 			}
@@ -39,8 +39,8 @@ const useChatApi = attraction => {
 			const chatResponse = response.data.choices[0].message.content
 			setChatHistory(prevChatHistory => [
 				...prevChatHistory,
-				fullMessage, // Сохраняем новое сообщение пользователя
-				chatResponse // Сохраняем ответ бота
+				fullMessage,
+				chatResponse
 			])
 		} catch (error) {
 			console.error(error)

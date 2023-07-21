@@ -17,10 +17,16 @@ const FavoritePage = () => {
 	}
 
 	const openGoogleMaps = place => {
-    const attractionName = place.name;
-    const url = `https://www.google.com/maps?q=${encodeURIComponent(attractionName)}`;
-    window.open(url, '_blank');
-  };
+		const attractionName = place.name
+		const url = `https://www.google.com/maps?q=${encodeURIComponent(
+			attractionName
+		)}`
+		window.open(url, '_blank')
+	}
+
+	const handleGoBack = () => {
+		window.history.back()
+	}
 
 	return (
 		<div className={styles.favoritePage}>
@@ -45,18 +51,21 @@ const FavoritePage = () => {
 								/>
 							)}
 							<h2>{place.name}</h2>
-							<p>Address: {place.address.road}</p>
-              <Link
-                to={`/chat/${place.xid}`}
-                state={{ attraction: place }}
-                className={styles.buttonChat}
-              >
-                Go to chat
-                <ImArrowRight2 />
-              </Link>
-              <button className={styles.mapButton} onClick={() => openGoogleMaps(place)}>
-                <ImMap2 />
-              </button>
+							<p>Address: {place.address.road || 'No address'}</p>
+							<Link
+								to={`/chat/${place.xid}`}
+								state={{ attraction: place }}
+								className={styles.buttonChat}
+							>
+								Go to chat
+								<ImArrowRight2 />
+							</Link>
+							<button
+								className={styles.mapButton}
+								onClick={() => openGoogleMaps(place)}
+							>
+								<ImMap2 />
+							</button>
 							<button
 								onClick={() => handleRemoveFavorite(place.xid)}
 								className={styles.removeButton}
@@ -70,9 +79,9 @@ const FavoritePage = () => {
 				<p className={styles.noPlaces}>No favorite places yet.</p>
 			)}
 			<div className={styles.buttonContainer}>
-				<Link to='/' className={styles.goBackLink}>
+				<button onClick={handleGoBack} className={styles.goBackLink}>
 					Go Back
-				</Link>
+				</button>
 			</div>
 		</div>
 	)

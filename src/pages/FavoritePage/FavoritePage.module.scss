@@ -126,6 +126,9 @@
 	}
    
    .goBackLink {
+      cursor: pointer;
+      border: none;
+      color: white;
       display: inline-flex;
       justify-content: center;
 		margin-right: 10px;
