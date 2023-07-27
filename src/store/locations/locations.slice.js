@@ -23,7 +23,7 @@ const fetchPlaces = async (cityName, offset) => {
 
 		// Loop through the retrieved places and fetch more details for each place
 		for (const place of placesData.features) {
-			await new Promise(resolve => setTimeout(resolve, 100))
+			await new Promise(resolve => setTimeout(resolve, 500))
 
 			const xid = place.properties.xid
 			const placeResponse = await axios.get(

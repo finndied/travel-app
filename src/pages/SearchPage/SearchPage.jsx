@@ -11,7 +11,7 @@ import styles from './SearchPage.module.scss'
 import placeholderImage from '../../assets/images/no-image.jpg'
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
 import { ImArrowRight2, ImMap2 } from 'react-icons/im'
-import MyLoader from './MyLoader'
+import MyLoader from '../../components/MyLoader/MyLoader'
 
 const SearchPage = () => {
 	const dispatch = useDispatch()
@@ -48,7 +48,7 @@ const SearchPage = () => {
 		<div className={styles.searchPage}>
 			<Header className={styles.header} />
 			<div className={styles.background} />
-			<h1>Search Results for {cityName}</h1>
+			<h1>Search Results</h1>
 			{isFirstLoad && isLoading && <MyLoader />}
 			{places.length > 0 ? (
 				<>
