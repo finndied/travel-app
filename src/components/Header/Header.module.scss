@@ -1,29 +1,31 @@
 .wrapper {
-   position: fixed;
-   display: flex;
-   align-items: center;
-   z-index: 5;
-   width: 100%;
-   transition: all 0.9s ease 0s;
+	position: fixed;
+	display: flex;
+	align-items: center;
+	z-index: 5;
+	width: 100%;
+	transition: all 0.9s ease 0s;
 	.logo a {
-      background-image: url('/assets/images/logo.svg');
-      background-repeat: no-repeat;
-      background-size: contain;
-      margin: 20px;
-      padding: 10px;
+		background-repeat: no-repeat;
+		background-size: contain;
+		margin: 20px;
+		padding: 10px;
 		display: flex;
-      text-decoration: none;
-      align-items: center;
-      color: white;
-      h3 {
-         text-transform: uppercase;
-         margin-left: 30px;
-         font-weight: 700;
-         font-size: 17px;
-      }
+		text-decoration: none;
+		align-items: center;
+		color: white;
+		h3 {
+			text-transform: uppercase;
+			margin-left: 30px;
+			font-weight: 700;
+			font-size: 17px;
+		}
+	}
+	.logotype {
+		width: 40px;
 	}
 }
 
 .backWrapper {
-   background-color: #1d1f207c;
+	background-color: #1d1f207c;
 }

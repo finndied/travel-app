@@ -10,6 +10,7 @@ import {
 } from '../../store/randomPlaces/randomPlaces.slice'
 import { ImArrowRight2, ImMap2 } from 'react-icons/im'
 import placeholderImage from '../../assets/images/no-image.jpg'
+import background1 from '../../assets/images/background1.jpg';
 import { Link } from 'react-router-dom'
 import MyLoader from '../../components/MyLoader/MyLoader'
 import { cities } from './cities'
@@ -76,7 +77,7 @@ export const HomePage = () => {
 	return (
 		<div className={styles.wrapper}>
 			<Header />
-			<div className={styles.background}>
+			<div className={styles.background} style={{ backgroundImage: `url(${background1})` }}>
 				<p>Unleash Your Inner Adventurer with Our Exciting Journey Packages</p>
 				<Input value={city} onChange={e => setCity(e.target.value)} />
 				<h2>Random Places</h2>
