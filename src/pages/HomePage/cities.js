@@ -13,6 +13,11 @@ export const cities = [
    'Milan',
    'Vienna',
    'Amsterdam',
+   'Bangkok',
+   'Madrid',
+   'Istanbul',
+   'Washington',
+   'Warsaw',
    'Saint Petersburg'
 ]
 

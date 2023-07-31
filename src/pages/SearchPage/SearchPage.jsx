@@ -27,6 +27,7 @@ const SearchPage = () => {
 		setIsFirstLoad(false)
 	}
 
+	// Function to handle adding/removing places from favorites
 	const handleFavorite = place => {
 		if (favorites.find(favorite => favorite.xid === place.xid)) {
 			dispatch(removeFromFavorites({ xid: place.xid }))
@@ -36,6 +37,7 @@ const SearchPage = () => {
 		}
 	}
 
+	// Function to open Google Maps for a place
 	const openGoogleMaps = attraction => {
 		const attractionName = attraction.name
 		const url = `https://www.google.com/maps?q=${encodeURIComponent(

@@ -49,6 +49,7 @@ export const HomePage = () => {
 		}
 	}, [randomPlaces.length, dispatch])
 
+	// Function to open Google Maps for a place
 	const openGoogleMaps = attraction => {
 		const attractionName = attraction.name
 		const url = `https://www.google.com/maps?q=${encodeURIComponent(

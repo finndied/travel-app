@@ -5,9 +5,6 @@ import styles from './Navbar.module.scss'
 export const Navbar = () => {
 	return (
 		<div className={styles.wrapper}>
-			<Link to='#'>
-				<p>Tutorial</p>
-			</Link>
          <Link to='/favorites'>
 				<p>Favorites</p>
 			</Link>

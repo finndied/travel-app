@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { ImArrowRight2, ImMap2 } from 'react-icons/im'
 
 const FavoritePage = () => {
+	// Get favorites from the Redux store
 	const dispatch = useDispatch()
 	const { favorites } = useSelector(({ favorites }) => favorites)
 
@@ -16,6 +17,7 @@ const FavoritePage = () => {
 		dispatch(removeFromFavorites({ xid }))
 	}
 
+	// Function to open Google Maps for a place
 	const openGoogleMaps = place => {
 		const attractionName = place.name
 		const url = `https://www.google.com/maps?q=${encodeURIComponent(

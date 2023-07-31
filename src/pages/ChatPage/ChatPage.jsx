@@ -9,6 +9,8 @@ import useChatApi from '../../hooks/useChatApi'
 const ChatPage = () => {
 	const location = useLocation()
 	const attraction = location.state?.attraction
+
+	// Use the 'useChatApi' custom hook to handle chat functionality
 	const { inputMessage, setInputMessage, chatHistory, sendChatRequest } =
 		useChatApi(attraction)
 
@@ -51,6 +53,7 @@ const ChatPage = () => {
 					)}
 					<h1>Ask the bot something about this place</h1>
 				</div>
+				{/* Chat container */}
 				<div className={styles.chat}>
 					{chatHistory.map((message, index) => (
 						<div className={styles.chatAnswer} key={index}>

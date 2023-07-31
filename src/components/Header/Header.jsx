@@ -7,6 +7,7 @@ export const Header = ({ className }) => {
 	const [showElement, setShowElement] = useState(false)
 
 	useEffect(() => {
+		// Function to handle the scroll event
 		function handleScroll() {
 			if (window.scrollY > 10) {
 				setShowElement(true)
@@ -26,7 +27,6 @@ export const Header = ({ className }) => {
 				<div className={`${styles.wrapper} ${className} ${showElement ? styles.backWrapper : ''}`}>
 					<div className={styles.logo}>
 						<Link to='/'>
-							{/* <img src='src/assets/images/logo.svg' width='35px' alt='logo' /> */}
 							<h3>Travel app</h3>
 						</Link>
 					</div>

@@ -2,11 +2,14 @@ import { useState } from 'react'
 import axios from 'axios'
 
 const useChatApi = attraction => {
+	// State for input message and chat history
 	const [inputMessage, setInputMessage] = useState('')
 	const [chatHistory, setChatHistory] = useState([])
 
+	// Function to send a chat request to the API
 	const sendChatRequest = async message => {
 		if (!attraction) {
+			// If attraction data is not available, show a message in the chat
 			setChatHistory(prevChatHistory => [
 				...prevChatHistory,
 				'Please ask questions related to the attraction.'
@@ -14,8 +17,10 @@ const useChatApi = attraction => {
 			return
 		}
 
+		// Combine user's message with the attraction's name
 		const fullMessage = `About ${attraction.name}: ${message}`
 
+		// API request options
 		const options = {
 			method: 'POST',
 			url: 'https://chatgpt-chatgpt3-5-chatgpt4.p.rapidapi.com/v1/chat/completions',
@@ -37,6 +42,7 @@ const useChatApi = attraction => {
 		try {
 			const response = await axios.request(options)
 			const chatResponse = response.data.choices[0].message.content
+			 // Update the chat history with the user's message and the API response
 			setChatHistory(prevChatHistory => [
 				...prevChatHistory,
 				fullMessage,
